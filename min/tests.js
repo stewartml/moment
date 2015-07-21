@@ -30303,6 +30303,13 @@
         }
     });
 
+    test('2 digit year with YYYY format', function (assert) {
+        assert.equal(moment('9/2/99', 'D/M/YYYY').format('DD/MM/YYYY'), '09/02/1999', 'D/M/YYYY ---> 9/2/99');
+        assert.equal(moment('9/2/1999', 'D/M/YYYY').format('DD/MM/YYYY'), '09/02/1999', 'D/M/YYYY ---> 9/2/1999');
+        assert.equal(moment('9/2/68', 'D/M/YYYY').format('DD/MM/YYYY'), '09/02/2068', 'D/M/YYYY ---> 9/2/68');
+        assert.equal(moment('9/2/69', 'D/M/YYYY').format('DD/MM/YYYY'), '09/02/1969', 'D/M/YYYY ---> 9/2/69');
+    });
+
     test('unix timestamp format', function (assert) {
         var formats = ['X', 'X.S', 'X.SS', 'X.SSS'], i, format;
 
@@ -30700,7 +30707,6 @@
         assert.equal(moment([99, 0, 1]).format('YYYY-MM-DD'), '0099-01-01', 'Year AD 99');
         assert.equal(moment([999, 0, 1]).format('YYYY-MM-DD'), '0999-01-01', 'Year AD 999');
         assert.equal(moment('0 1 1', 'YYYY MM DD').format('YYYY-MM-DD'), '0000-01-01', 'Year AD 0');
-        assert.equal(moment('99 1 1', 'YYYY MM DD').format('YYYY-MM-DD'), '0099-01-01', 'Year AD 99');
         assert.equal(moment('999 1 1', 'YYYY MM DD').format('YYYY-MM-DD'), '0999-01-01', 'Year AD 999');
         assert.equal(moment('0 1 1', 'YYYYY MM DD').format('YYYYY-MM-DD'), '00000-01-01', 'Year AD 0');
         assert.equal(moment('99 1 1', 'YYYYY MM DD').format('YYYYY-MM-DD'), '00099-01-01', 'Year AD 99');
@@ -30994,12 +31000,10 @@
         }
     }
 
-    var helpers_each = each;
-
     module('days in month');
 
     test('days in month', function (assert) {
-        helpers_each([31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31], function (days, i) {
+        each([31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31], function (days, i) {
             var firstDay = moment([2012, i]),
                 lastDay  = moment([2012, i, days]);
             assert.equal(firstDay.daysInMonth(), days, firstDay.format('L') + ' should have ' + days + ' days.');
@@ -34343,12 +34347,10 @@
         }
     }
 
-    var helpers_each = each;
-
     module('locale', {
         setup : function () {
             // TODO: Remove once locales are switched to ES6
-            helpers_each([{
+            each([{
                 name: 'en-gb',
                 data: {}
             }, {
